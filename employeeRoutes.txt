@@ -1,0 +1,105 @@
+// import express from "express";
+// import { Request, Response } from "express";
+// import Employee from "./src/entity/employee.entity";
+// import { DataSource } from "typeorm";
+// import datasource from "./src/db/data-source";
+
+// let employe: Employee[] = [
+//   {
+//     id: 1,
+//     email: "yo@mail.com",
+//     name: "car",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//     deletedAt: new Date(),
+//   },
+//   {
+//     id: 2,
+//     email: "yoyo@mail.com",
+//     name: "cars",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//     deletedAt: new Date(),
+//   },
+// ];
+
+// const employeeRoutes = express.Router();
+// const userRoutes = express.Router();
+
+// employeeRoutes.get("/", async (req: Request, res: Response) => {
+//   console.log("hi");
+//   const employeeRepository = await datasource.getRepository(Employee);
+//   const employee = await employeeRepository.find();
+//   console.log(req.url + "  get");
+//   res.status(200).send(employee);
+// });
+
+// employeeRoutes.get("/:id", async (req: Request, res: Response) => {
+//   let num = Number(req.params.id);
+//   const employeeRepository = await datasource.getRepository(Employee);
+//   const employee = await employeeRepository.findOneBy({ id: num });
+//   console.log(req.url + "  specific get");
+//   console.log(req.params["id"] + "HEE HEE HAA HAA");
+
+//   console.log(employee[num]);
+//   /*                 const employee = await employeeRepository.find();
+
+//                     const data = employee.find((record) => record.id == Number(req.params.id)); */
+
+//   res.status(200).send(employee);
+// });
+
+// employeeRoutes.post("/", async (req: Request, res: Response) => {
+//   const employeeRepository = await datasource.getRepository(Employee);
+//   /* 
+//                         Initial Way
+
+//                     const employee = await employeeRepository.find();
+//                     employee.push(req.body);
+//                     res.status(201).send(employee) 
+
+//                     I think for the await reason this doesnt work                   
+// */
+//   console.log(req.url + "  post");
+//   console.log(req.body);
+//   /*     
+//                     the idea was here to create a check (Unnecessary it was found)
+//                     if (!req.body) {
+//                     req.body = employe.length + 1;
+//     } */
+//   const newEmployee = new Employee();
+//   newEmployee.name = req.body.name;
+//   newEmployee.email = req.body.email;
+//   const savedEmployee = await employeeRepository.save(newEmployee);
+
+//   res.status(201).send(savedEmployee);
+// });
+
+// employeeRoutes.put("/:id", async (req: Request, res: Response) => {
+//   /* 
+//                       console.log(req.url + "  put");
+//                       const data = employe.find((record) => record.id == Number(req.params.id));
+//                       data.name = req.body.name;
+//                       data.email = req.body.email;
+//                       data.createdAt = req.body.createdAt; 
+                      
+//   */
+//   const employeeRepository = await datasource.getRepository(Employee);
+//   const putEmployee = await employeeRepository.findOneBy({
+//     id: Number(req.params.id),
+//   });
+
+//   putEmployee.name = req.body.name;
+//   putEmployee.email = req.body.email;
+//   const updatedEmployee = await employeeRepository.save(putEmployee);
+//   res.status(200).send(updatedEmployee);
+// });
+
+// employeeRoutes.delete("/:id", async (req: Request, res: Response) => {
+//   const employeeRepository = datasource.getRepository(Employee);
+//   const result = await employeeRepository.softDelete(Number(req.params.id));
+//   res.status(200).send(result);
+// });
+// // 204 id prevents sending of data
+
+// export { userRoutes, employeeRoutes };
