@@ -32,25 +32,30 @@ import bodyParser from "body-parser";
 
 import AppDataSource from "./db/data-source.db";
 import employeeRouter from "./routes/employee.routes";
+import departmentRouter from "./routes/department.routes";
 import httpException from "./exceptions/https.exceptions";
+import errorMiddleware from "./middleware/error.middleware";
 console.log("staryting..");
 const server = express();
 console.log("passed Middleware");
 
-server.use(loggerMiddleware);
+// server.use(loggerMiddleware);
 console.log("passed Middleware2");
 server.use(bodyParser.json());
 console.log("passed bodyParser");
 server.use("/employees", employeeRouter);
+server.use("/department", departmentRouter);
+server.use(loggerMiddleware);
+server.use(errorMiddleware);
 
-server.use((err: Error, req, res, next) => {
-  console.error(err.stack);
-  if (err instanceof httpException) {
-    res.status(err.status).send({ error: err.message });
-    return;
-  }
-  res.status(500).send({ error: err.message });
-});
+// server.use((err: Error, req, res, next) => {
+//   console.error(err.stack);
+//   if (err instanceof httpException) {
+//     res.status(err.status).send({ error: err.message });
+//     return;
+//   }
+//   res.status(500).send({ error: err.message });
+// });
 
 // server.use(()=>{
 

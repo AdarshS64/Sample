@@ -4,12 +4,15 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Address from "./address.entity";
+import Department from "./department.entity";
 
 @Entity() //decorator
 class Employee extends AbstractEntity {
@@ -33,6 +36,10 @@ class Employee extends AbstractEntity {
 
   @Column({ nullable: true })
   role: string;
+
+  @JoinColumn()
+  @ManyToOne(() => Department, (department) => department.employee)
+  department: Department;
 }
 
 export default Employee;

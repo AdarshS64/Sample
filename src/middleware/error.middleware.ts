@@ -7,6 +7,7 @@ const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("You reached errorMIddleware");
   try {
     if (error instanceof HttpException) {
       const status: number = error.status || 500;

@@ -16,9 +16,10 @@ export default class EmployeeRepository {
 
   async findOneBy(filter: Partial<Employee>): Promise<Employee | null> {
     const employeeRepository = this.repository;
+    console.log(filter, "u reached find one by");
     return employeeRepository.findOne({
       where: filter,
-      // relations: ["address"],
+      relations: ["address"],
     });
   }
 
@@ -38,5 +39,10 @@ export default class EmployeeRepository {
     const employeeRepository = this.repository;
 
     return await employeeRepository.save(filter);
+  }
+
+  async softRemove(filter: Partial<Employee>): Promise<void> {
+    const employeeRepository = this.repository;
+    await employeeRepository.softRemove(filter);
   }
 }

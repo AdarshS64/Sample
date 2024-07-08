@@ -10,6 +10,11 @@ import Address from "../entity/address.entity";
 import { Role } from "../utils/role.enum";
 import authorize from "../middleware/authorize.middleware";
 import { AddressDto } from "../dto/address.dto";
+import DepartmentService from "../service/department.service";
+import DepartmentController from "./department.controller";
+import departmentService from "../service/department.service";
+import { UpdateEmployeeDto } from "../dto/updateEmployee.dto";
+import RequestWithUser from "../utils/requestwithUser";
 
 export default class EmployeeController {
   public router: express.Router;
@@ -17,14 +22,14 @@ export default class EmployeeController {
   constructor(private employeeService: EmployeeService) {
     this.router = express.Router();
 
-    this.router.get("/", this.getAllEmployees);
-    this.router.get("/:id", this.getEmployeesById);
+    this.router.get("/", authorize, this.getAllEmployees);
+    this.router.get("/:id", authorize, this.getEmployeesById);
 
-    this.router.post("/", this.createEmployees);
+    this.router.post("/", authorize, this.createEmployees);
 
-    this.router.put("/:id", this.updateEmployees);
+    this.router.put("/:id", authorize, this.updateEmployees);
 
-    this.router.delete("/:id", this.deleteEmployee);
+    this.router.delete("/:id", authorize, this.deleteEmployee);
 
     this.router.post("/login", this.loginEmployee);
 
@@ -32,7 +37,7 @@ export default class EmployeeController {
   }
 
   public getAllEmployees = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response
   ) => {
     const employee = await this.employeeService.getAllEmployees();
@@ -40,7 +45,7 @@ export default class EmployeeController {
   };
 
   public getEmployeesById = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
@@ -48,7 +53,7 @@ export default class EmployeeController {
       const employeeId = Number(req.params.id);
       const employee = await this.employeeService.getEmployeeById(employeeId);
       if (!employee) {
-        throw new httpException(404, "Error time");
+        throw new httpException(404, "Employee not found");
       }
       res.status(200).send(employee);
     } catch (error) {
@@ -58,7 +63,7 @@ export default class EmployeeController {
   };
 
   public createEmployees = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
@@ -95,13 +100,13 @@ export default class EmployeeController {
       //   next(error);
       // }
 
-      // const role = req.body.role;
-      // if (role !== Role.HR) {
-      //   throw new httpException(
-      //     403,
-      //     "You are not authorized to create employee"
-      //   );
-      // }
+      const role = req.role;
+      if (role !== Role.HR) {
+        throw new httpException(
+          403,
+          "You are not authorized to create employee"
+        );
+      }
 
       const createEmployeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(createEmployeeDto);
@@ -112,6 +117,8 @@ export default class EmployeeController {
 
       const line1 = req.body.address.line1;
       const pincode = req.body.address.pincode;
+      const department = req.body.department;
+
       // console.log(address, "ba");
       console.log(createEmployeeDto);
 
@@ -122,7 +129,8 @@ export default class EmployeeController {
         line1,
         pincode,
         createEmployeeDto.password,
-        createEmployeeDto.role
+        createEmployeeDto.role,
+        department
       );
       res.status(201).send(savedEmployee);
     } catch (error) {
@@ -131,37 +139,58 @@ export default class EmployeeController {
   };
 
   public updateEmployees = async (
-    req: express.Request,
-    res: express.Response
+    req: RequestWithUser,
+    res: express.Response,
+    next: express.NextFunction
   ) => {
-    const body = req.body;
-    const employeeId = Number(req.params.id);
-    const newEmployee = await this.employeeService.getEmployeeById(employeeId);
+    try {
+      const role = req.role;
+      if (role !== Role.HR) {
+        throw new httpException(
+          403,
+          "You are not authorized to create employee"
+        );
+      }
+      const body = req.body;
+      const employeeId = Number(req.params.id);
+      const updateEmployeeDto = plainToInstance(UpdateEmployeeDto, req.body);
+      console.log(updateEmployeeDto);
+      const errors = await validate(updateEmployeeDto);
+      if (errors.length > 0) {
+        console.log(JSON.stringify(errors));
+        throw new httpException(400, JSON.stringify(errors));
+      }
 
-    newEmployee.id = employeeId;
-    newEmployee.name = body.name;
-    newEmployee.email = body.email;
-    newEmployee.age = body.age;
-
-    // newEmployee.address = body.address; Wrang
-    newEmployee.address.line1 = body.address.line1;
-    newEmployee.address.pincode = body.address.pincode;
-
-    console.log(newEmployee);
-    const employee = await this.employeeService.updateEmployee(
-      newEmployee,
-      employeeId
-    );
-    res.status(200).send(employee);
+      const employee = await this.employeeService.updateEmployee(
+        employeeId,
+        updateEmployeeDto.email,
+        updateEmployeeDto.name,
+        updateEmployeeDto.age,
+        req.body.line1,
+        req.body.pincode,
+        updateEmployeeDto.password,
+        updateEmployeeDto.role,
+        req.body.department_name
+      );
+      res.status(200).send(employee);
+    } catch (error) {
+      next(error);
+    }
   };
 
   public deleteEmployee = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response
   ) => {
-    const employee = await this.employeeService.deleteEmployee(
+    const role = req.role;
+    if (role !== Role.HR) {
+      throw new httpException(403, "You are not authorized to create employee");
+    }
+    const employee = await this.employeeService.getEmployeeById(
       Number(req.params.id)
     );
+    console.log(employee, "car");
+    const deleteEmployee = await this.employeeService.deleteEmployee(employee);
     res.status(200).send("Deleted");
   };
 

@@ -3,10 +3,14 @@ import EmployeeRepository from "../../src/repository/employee.repository";
 import Employee from "../../src/entity/employee.entity";
 import EmployeeService from "../../src/service/employee.service";
 import { when } from "jest-when";
+import Department from "../../src/entity/department.entity";
+import DepartmentRepository from "../../src/repository/department.repository";
+import DepartmentService from "../../src/service/department.service";
 
 describe("Employee Service", () => {
   let employeeRepository: EmployeeRepository;
   let employeeService: EmployeeService;
+  let departmentService: DepartmentService;
 
   beforeAll(() => {
     const dataSource = {
@@ -15,7 +19,17 @@ describe("Employee Service", () => {
     employeeRepository = new EmployeeRepository(
       dataSource.getRepository(Employee)
     ) as jest.Mocked<EmployeeRepository>;
-    employeeService = new EmployeeService(employeeRepository);
+
+    departmentService = new DepartmentService(
+      new DepartmentRepository(
+        dataSource.getRepository(Department)
+      ) as jest.Mocked<DepartmentRepository>
+    );
+
+    employeeService = new EmployeeService(
+      employeeRepository,
+      departmentService
+    );
   });
 
   it("should return allEmployees", async () => {

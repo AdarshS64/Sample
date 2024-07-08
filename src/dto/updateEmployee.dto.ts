@@ -2,43 +2,44 @@ import { Type } from "class-transformer";
 import {
   IsEmail,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from "class-validator";
 import { AddressDto } from "./address.dto";
 import "reflect-metadata";
 import { Role } from "../utils/role.enum";
+import { CreateEmployeeDto } from "./employee.dto";
 
-export class CreateEmployeeDto {
-  @IsNotEmpty()
+export class UpdateEmployeeDto {
   @IsString()
+  @IsOptional()
   name: string;
 
-  @IsNotEmpty()
   @IsEmail()
   @IsString()
+  @IsOptional()
   email: string;
 
-  @IsNotEmpty()
   @IsNumber()
+  @IsOptional()
   age: number;
 
-  @IsNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => AddressDto)
+  @IsOptional()
   address: any;
 
-  @IsNotEmpty()
   @IsString()
+  @IsOptional()
   password: string;
 
-  @IsNotEmpty()
   @IsEnum(Role)
+  @IsOptional()
   role: Role;
 
-  @IsNotEmpty()
   @IsString()
+  @IsOptional()
   department: string;
 }

@@ -5,18 +5,16 @@ import EmployeeService from "../service/employee.service";
 import Employee from "../entity/employee.entity";
 import datasource from "../db/data-source.db";
 import DepartmentService from "../service/department.service";
-import Department from "../entity/department.entity";
 import DepartmentRepository from "../repository/department.repository";
+import Department from "../entity/department.entity";
+import DepartmentController from "../controller/department.controller";
 
-console.log("Employee Routes");
-const employeeController = new EmployeeController(
-  new EmployeeService(
-    new EmployeeRepository(datasource.getRepository(Employee)),
-    new DepartmentService(
-      new DepartmentRepository(datasource.getRepository(Department)
-    )
+console.log("Department Routes");
+const departmentController= new DepartmentController(
+  new DepartmentService(
+    new DepartmentRepository(datasource.getRepository(Department))
   )
-));
-const employeeRouter = employeeController.router;
+);
+const DepartmentRouter = departmentController.router;
 
-export default employeeRouter;
+export default DepartmentRouter;
