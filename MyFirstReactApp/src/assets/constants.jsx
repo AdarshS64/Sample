@@ -1,0 +1,56 @@
+const EmpDetails = {
+  headers: {
+    empName: "Employee Name",
+    empID: "Employee ID",
+    empJD: "Joining Date",
+    empRole: "Role",
+    empStat: "Status",
+    empExp: "Experience",
+    empAct: "Action",
+    empAdd: "Address",
+  },
+  details: [
+    {
+      empName: "Harry",
+      empID: 1,
+      empJD: "12.02.24",
+      empRole: "Full Stack",
+      empStat: "Probation",
+      empExp: 5,
+      empAct: "Action",
+      empAdd: "Location 1",
+    },
+    {
+      empName: "Susan Kurian",
+      empID: 2,
+      empJD: "12.02.24",
+      empRole: "UI Engineer",
+      empStat: "Probation",
+      empExp: 5,
+      empAct: "Action",
+      empAdd: "Location 1",
+    },
+    {
+      empName: "Susan Kurian",
+      empID: 3,
+      empJD: "12.02.24",
+      empRole: "UI Engineer",
+      empStat: "Active",
+      empExp: 5,
+      empAct: "Action",
+      empAdd: "Location 1",
+    },
+    {
+      empName: "Susan Kurian",
+      empID: 4,
+      empJD: "12.02.24",
+      empRole: "UI Engineer",
+      empStat: "Inactive",
+      empExp: 5,
+      empAct: "Action",
+      empAdd: "Location 1",
+    },
+  ],
+};
+
+export default EmpDetails;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <title>Page Title</title>
+  </head>
+
+  <body>
+    <aside>
+      <div class="logo">
+        <img src="/kv-logo.png" alt="KeyValue Systems logo" />
+      </div>
+      <br />
+      <div class="nav-items">
+        <ul>
+          <li class="ic">
+            <div class="icon">
+              <img src="/icon.svg" alt="KeyValue Systems logo" />
+            </div>
+          </li>
+          <div class="anchor-tag">
+            <a>Employee List</a>
+          </div>
+        </ul>
+      </div>
+    </aside>
+    <main>
+      <div class="content">
+        <div class="heading">
+          <h2>Create Employee</h2>
+        </div>
+        <div class="form-content">
+          <form action="/action_page.php">
+            <div class="inputs">
+              <div class="form-input">
+                <label for="fname">Employee name</label><br />
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  value="Employee name"
+                />
+              </div>
+              <div class="form-input">
+                <label for="lname">Employee ID</label><br />
+                <input
+                  type="text"
+                  id="lname"
+                  name="lname"
+                  value="Employee ID"
+                />
+              </div>
+              <div class="form-input">
+                <label for="fname">Joining Date</label><br />
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  value="Joining Date"
+                />
+              </div>
+              <div class="form-input">
+                <label for="cars">Role:</label><br />
+                <select id="cars" name="cars" value="Role" placeholder="Role">
+                  <option value="" disabled selected hidden>
+                    Select your Role
+                  </option>
+                  <option value="Dev">Developer</option>
+                  <option value="QA">Tester</option>
+                  <option value="HR">HR</option>
+                </select>
+              </div>
+              <div class="form-input">
+                <label for="fname">Status</label><br />
+                <select id="cars" name="cars">
+                  <option value="" disabled selected hidden>Status</option>
+                  <option value="Trainee">Trainee</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Senior">Senior</option>
+                </select>
+              </div>
+              <div class="form-input">
+                <label for="fname">Experience</label><br />
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  value="Experience"
+                /><br />
+              </div>
+              <div class="form-input">
+                <label for="fname">Address</label><br />
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  value="Address"
+                /><br />
+              </div>
+            </div>
+            <br />
+            <input type="submit" value="Create" id="sub" />
+            <input type="button" value="Cancel" />
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<!-- aside
+  main
+  section
+  heading
+  form
+  div -->
