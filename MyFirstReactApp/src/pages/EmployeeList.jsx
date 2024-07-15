@@ -32,10 +32,8 @@ const EmployeeList = () => {
     navigate(`edit/${empId}`);
   };
 
-  const onSelect = (e, empId) => {
-    if (e.target === e.currentTarget) {
-      navigate(`details/${empId}`);
-    }
+  const onSelect = (empId) => {
+    navigate(`details/${empId}`);
   };
 
   const onDelete = () => {
@@ -77,7 +75,10 @@ const EmployeeList = () => {
                   return (
                     <div
                       className="data-rows"
-                      onClick={(e) => onSelect(e, value.empID)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelect(value.empID);
+                      }}
                     >
                       {console.log(value.empID, "id???")}
                       {Object.keys(value).map((options) => {
@@ -88,12 +89,18 @@ const EmployeeList = () => {
                                 <img
                                   src={DeleteLogo}
                                   alt="Delete Logo"
-                                  onClick={(e) => onDelete(e, value.empID)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDelete(e, value.empID);
+                                  }}
                                 />
                               </div>
                               <div
                                 className="action-images"
-                                onClick={(e) => onClick(e, value.empID)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onClick(value.empID);
+                                }}
                               >
                                 <img
                                   src={EditLogo}
