@@ -8,7 +8,7 @@ const EmployeeDetails = () => {
   const empHeaders = EmpDetails.headers;
 
   console.log(empDetails);
-  const empdetail = empDetails.filter((emp) => emp.empID == id);
+  const empdetail = empDetails.filter((emp) => emp.id == id);
 
   const onStat = (type) => {
     if (type == "Probation") {

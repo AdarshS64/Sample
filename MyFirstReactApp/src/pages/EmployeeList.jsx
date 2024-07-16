@@ -28,12 +28,12 @@ const EmployeeList = () => {
     return "header-options";
   };
 
-  const onClick = (e, empId) => {
-    navigate(`edit/${empId}`);
+  const onClick = (id) => {
+    navigate(`edit/${id}`);
   };
 
-  const onSelect = (empId) => {
-    navigate(`details/${empId}`);
+  const onSelect = (id) => {
+    navigate(`details/${id}`);
   };
 
   const onDelete = () => {
@@ -60,13 +60,15 @@ const EmployeeList = () => {
             <div className="emp-data">
               <div className="data-heading">
                 {Object.keys(empHeaders).map((options) => {
-                  return (
-                    <>
-                      <span className="header-options">
-                        {empHeaders[options]}
-                      </span>
-                    </>
-                  );
+                  if (options != "address") {
+                    return (
+                      <>
+                        <span className="header-options">
+                          {empHeaders[options]}
+                        </span>
+                      </>
+                    );
+                  }
                 })}
               </div>
               <br />
@@ -77,10 +79,10 @@ const EmployeeList = () => {
                       className="data-rows"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onSelect(value.empID);
+                        onSelect(value.id);
                       }}
                     >
-                      {console.log(value.empID, "id???")}
+                      {console.log(value.id, "id???")}
                       {Object.keys(value).map((options) => {
                         if (options == "empAct") {
                           return (
@@ -91,7 +93,7 @@ const EmployeeList = () => {
                                   alt="Delete Logo"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    onDelete(e, value.empID);
+                                    onDelete(value.id);
                                   }}
                                 />
                               </div>
@@ -99,7 +101,7 @@ const EmployeeList = () => {
                                 className="action-images"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  onClick(value.empID);
+                                  onClick(value.id);
                                 }}
                               >
                                 <img
@@ -109,7 +111,7 @@ const EmployeeList = () => {
                               </div>
                             </span>
                           );
-                        } else if (options == "empAdd") {
+                        } else if (options == "address") {
                           {
                           }
                         } else {
@@ -127,16 +129,32 @@ const EmployeeList = () => {
             </div>
             {showDelete && (
               <>
-                <div
+                <Modal
+                  buttonStyle={"white"}
+                  onClose={() => {
+                    onDelete();
+                  }}
+                  value={{ Del: "Delete", Cancel: "Cancel" }}
                   style={{
                     display: "flex",
-                    position: "fixed",
+                    position: "absolute",
+                    zIndex: "1000",
+                    left: "20%",
+                    top: "40%",
+                    width: "50%",
+                    height: "50%",
+                    backgroundColor: "rgba(255, 255, 255)",
+                    color: "black",
                     justifyContent: "center",
-                    alignContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    gap: "40px",
+                    textAlign: "center",
+                    opacity: "1",
+                    border: "1px black solid",
+                    boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.5)", // Example box shadow
                   }}
-                >
-                  <Modal></Modal>
-                </div>
+                ></Modal>
               </>
             )}
           </div>

@@ -6,13 +6,13 @@ import { useParams } from "react-router-dom";
 const EditEmployee = () => {
   const { id } = useParams();
   const [eddetails, setEdDetails] = useState({
-    empName: "",
-    empId: "",
+    name: "",
+    id: "",
     empJd: "",
-    empRole: "",
+    role: "",
     empStat: "",
     empExp: "",
-    empAdd: "",
+    address: "",
   });
 
   const onChange = (e, field) => {

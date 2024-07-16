@@ -4,13 +4,13 @@ import EmployeeForm from "../components/EmployeeForm";
 
 const CreateEmployee = () => {
   const [crdetails, setcCrdetails] = useState({
-    empName: "",
-    empId: "",
+    name: "",
+    id: "",
     empJd: "",
-    empRole: "",
+    role: "",
     empStat: "",
     empExp: "",
-    empAdd: "",
+    address: "",
   });
 
   const onChange = (e, field) => {
