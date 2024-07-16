@@ -91,7 +91,7 @@ const EmployeeForm = (props) => {
 
   return (
     <>
-      <form className="employee-form" action="/action_page.php">
+      <form className="employee-form">
         <div className="inputs">
           {fields.map((value) => {
             if (!value.select) {
@@ -143,8 +143,16 @@ const EmployeeForm = (props) => {
         <br />
         {/* <input type="submit" value="Create" id="sub" />
             <input type="button" value="Cancel" /> */}
-        <Button value="Submit" className="employee-button"></Button>
-        <Button value="Cancel" className="employee-button"></Button>
+        <Button
+          value="Submit"
+          className="employee-button"
+          handleSub={props.onSubmit}
+        ></Button>
+        <Button
+          value="Cancel"
+          className="employee-button"
+          handleSub={props.onCancel}
+        ></Button>
       </form>
       {fields.map((box) => {
         return (

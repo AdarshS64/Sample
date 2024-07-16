@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import login from "../assets/kv-login_720.jpg";
+import loginImage from "../assets/kv-login_720.jpg";
 import "./style.scss";
 import Button from "../components/Button";
 import logo from "../assets/kv-logo.png";
 import TextField from "../components/TextField";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../api/LoginApi/api";
 
 const Login = ({ handleSubmit }) => {
   const [count, setCount] = useState(0);
@@ -13,6 +14,7 @@ const Login = ({ handleSubmit }) => {
   const [pass, setPass] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate();
+  const [login, { isSuccess, data }] = useLoginMutation();
 
   // const navigate = navigator();
 
@@ -26,14 +28,11 @@ const Login = ({ handleSubmit }) => {
   // }, [count]);
 
   useEffect(() => {
-    console.log(count, "in use Effect");
-
     userNameref.current.focus();
   }, []);
 
   const onChange = (e) => {
-    console.log(e.target.value);
-    if (e.target.value.length < 11) {
+    if (e.target.value.length < 30) {
       setText(e.target.value);
       setErr("");
     } else {
@@ -64,21 +63,27 @@ const Login = ({ handleSubmit }) => {
     },
   ];
 
-  const handleLogin = () => {
-    localStorage.setItem("token", "true");
-    navigate("/employee");
-
-    // handleSubmit();
-  };
-
-  const handleCount = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // setTimeout(() => {
-    //   console.log(count);
-    //   setCount(count - 2);
-    // }, 0);
-    setCount(count + 5);
+    login({ email: text, password: pass });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data.data.token, "mew");
+      localStorage.setItem("token", data.data.token);
+      navigate("/employee");
+    }
+  }, [isSuccess, data]);
+
+  // const handleCount = (e) => {
+  //   e.preventDefault();
+  //   // setTimeout(() => {
+  //   //   console.log(count);
+  //   //   setCount(count - 2);
+  //   // }, 0);
+  //   setCount(count + 5);
+  // };
 
   return (
     <>
@@ -86,7 +91,7 @@ const Login = ({ handleSubmit }) => {
         <div className="left-side">
           <div className="box">
             <span className="dot">
-              <img src={login} alt="KeyValue Systems logo" />
+              <img src={loginImage} alt="KeyValue Systems logo" />
             </span>
           </div>
         </div>

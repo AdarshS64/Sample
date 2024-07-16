@@ -8,6 +8,7 @@ const EmpDetails = {
     empExp: "Experience",
     empAct: "Action",
     address: "Address",
+    empEmail: "Email",
   },
   details: [
     {
@@ -17,8 +18,8 @@ const EmpDetails = {
       role: "Full Stack",
       empStat: "Probation",
       empExp: 5,
-      empAct: "Action",
       address: "Location 1",
+      email: "harry@example.com",
     },
     {
       name: "Susan Kurian",
@@ -27,8 +28,8 @@ const EmpDetails = {
       role: "UI Engineer",
       empStat: "Probation",
       empExp: 5,
-      empAct: "Action",
       address: "Location 1",
+      email: "susan.kurian@example.com",
     },
     {
       name: "Susan Kurian",
@@ -37,8 +38,8 @@ const EmpDetails = {
       role: "UI Engineer",
       empStat: "Active",
       empExp: 5,
-      empAct: "Action",
       address: "Location 1",
+      email: "susan.kurian@example.com",
     },
     {
       name: "Susan Kurian",
@@ -47,8 +48,8 @@ const EmpDetails = {
       role: "UI Engineer",
       empStat: "Inactive",
       empExp: 5,
-      empAct: "Action",
       address: "Location 1",
+      email: "susan.kurian@example.com",
     },
   ],
 };

@@ -1,8 +1,8 @@
 const SelectField = (props) => {
   const onChange = (e) => {
     if (props.onChange) {
-      console.log(e.target.value, props.id);
-      props.onChange(e, props.id);
+      console.log(e.target.value, props.id, "SelecField");
+      props.onChange(e, props.id ? props.id : e.target.value);
     }
   };
 

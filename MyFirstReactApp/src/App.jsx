@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CreateEmployee from "./pages/CreateEmployee";
 import Login from "./pages/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -7,6 +6,8 @@ import EmployeeList from "./pages/EmployeeList";
 import HomeLayout from "./pages/HomeLayout";
 import EditEmployee from "./pages/EditEmployee";
 import EmployeeDetails from "./pages/EmployeeDetails";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const App = () => {
   const route = createBrowserRouter([
@@ -20,7 +21,10 @@ const App = () => {
       path: "/employee",
       element: <HomeLayout />,
       children: [
-        { index: true, element: <EmployeeList /> },
+        {
+          index: true,
+          element: <EmployeeList />,
+        },
         { path: "create", element: <CreateEmployee /> },
         { path: "edit/:id", element: <EditEmployee /> },
         { path: "details/:id", element: <EmployeeDetails /> },
@@ -35,10 +39,12 @@ const App = () => {
 
   return (
     <>
-      <div>
-        {/* {flag ? <CreateEmployee /> : <Login handleSubmit={handleLogin} />} */}
-        <RouterProvider router={route}></RouterProvider>
-      </div>
+      <Provider store={store}>
+        <div>
+          {/* {flag ? <CreateEmployee /> : <Login handleSubmit={handleLogin} />} */}
+          <RouterProvider router={route}></RouterProvider>
+        </div>
+      </Provider>
     </>
   );
 };

@@ -1,13 +1,14 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
 import EmployeeForm from "../components/EmployeeForm";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
+import { actionTypes } from "../store/reducer";
 
 const EditEmployee = () => {
   const { id } = useParams();
   const [eddetails, setEdDetails] = useState({
     name: "",
-    id: "",
+    id: id,
     empJd: "",
     role: "",
     empStat: "",
@@ -15,9 +16,33 @@ const EditEmployee = () => {
     address: "",
   });
 
+  const { state, dispatch } = useOutletContext();
+
   const onChange = (e, field) => {
     console.log(field, e.target.value);
     setEdDetails({ ...eddetails, [field]: e.target.value });
+  };
+
+  const onSubmit = (eddetails, e) => {
+    e.preventDefault();
+
+    dispatch({
+      type: actionTypes.EDIT_EMPLOYEES,
+      payload: eddetails[0],
+    });
+  };
+
+  const onCancel = (e) => {
+    e.stopPropogation();
+    setcCrdetails({
+      name: "",
+      id: "",
+      empJd: "",
+      role: "",
+      empStat: "",
+      empExp: "",
+      address: "",
+    });
   };
 
   return (
@@ -68,7 +93,8 @@ const EditEmployee = () => {
             details={eddetails}
             mode="edit"
             userId={id}
-
+            onSubmit={onSubmit.bind(this, [eddetails])} //bind method
+            onCancel={onCancel}
           ></EmployeeForm>
         </div>
       </main>

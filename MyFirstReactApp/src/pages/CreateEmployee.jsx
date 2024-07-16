@@ -1,21 +1,57 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
 import EmployeeForm from "../components/EmployeeForm";
+import { actionTypes } from "../store/reducer";
+import { useOutletContext } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addEmployee } from "../store/employeeReducer";
+import { useAddEmployeeListMutation } from "../api/EmployeeApi/api";
 
 const CreateEmployee = () => {
   const [crdetails, setcCrdetails] = useState({
     name: "",
-    id: "",
+    id: "5",
     empJd: "",
+    empDep: "",
     role: "",
     empStat: "",
     empExp: "",
     address: "",
   });
+  const dispatch = useDispatch();
+  const [employee, { isSuccess, data }] = useAddEmployeeListMutation();
+
+  // const { state, dispatch } = useOutletContext();
 
   const onChange = (e, field) => {
-    console.log(field, e.target.value);
+    console.log(field, e.target.value, "Create Employee OnChange");
     setcCrdetails({ ...crdetails, [field]: e.target.value });
+  };
+
+  const onSubmit = (crdetails, e) => {
+    e.preventDefault();
+
+    // dispatch({
+    //   type: actionTypes.ADD_EMPLOYEES,
+    //   payload: crdetails[0],
+    // });
+    // console.log(crdetails);
+    // dispatch(addEmployee(crdetails[0]));
+
+    employee();
+  };
+
+  const onCancel = (e) => {
+    e.stopPropogation();
+    setcCrdetails({
+      name: "",
+      id: "",
+      empJd: "",
+      role: "",
+      empStat: "",
+      empExp: "",
+      address: "",
+    });
   };
 
   console.log(crdetails);
@@ -66,6 +102,8 @@ const CreateEmployee = () => {
           onChange={onChange}
           details={crdetails}
           visibleid={false}
+          onSubmit={onSubmit.bind(this, [crdetails])} //bind method
+          onCancel={onCancel}
         ></EmployeeForm>
       </div>
     </main>
