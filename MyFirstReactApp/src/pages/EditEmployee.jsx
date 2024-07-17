@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EmployeeForm from "../components/EmployeeForm";
 import { useOutletContext, useParams } from "react-router-dom";
 import { actionTypes } from "../store/reducer";
+import { useEditEmployeeListMutation } from "../api/EmployeeApi/api";
 
 const EditEmployee = () => {
   const { id } = useParams();
@@ -16,7 +17,9 @@ const EditEmployee = () => {
     address: "",
   });
 
-  const { state, dispatch } = useOutletContext();
+  const [editEmp]=useEditEmployeeListMutation();
+
+  // const { state, dispatch } = useOutletContext();
 
   const onChange = (e, field) => {
     console.log(field, e.target.value);
@@ -26,10 +29,11 @@ const EditEmployee = () => {
   const onSubmit = (eddetails, e) => {
     e.preventDefault();
 
-    dispatch({
-      type: actionTypes.EDIT_EMPLOYEES,
-      payload: eddetails[0],
-    });
+    // dispatch({
+    //   type: actionTypes.EDIT_EMPLOYEES,
+    //   payload: eddetails[0],
+    // });
+    editEmp()
   };
 
   const onCancel = (e) => {

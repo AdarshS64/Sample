@@ -6,6 +6,8 @@ import { when } from "jest-when";
 import Department from "../../src/entity/department.entity";
 import DepartmentRepository from "../../src/repository/department.repository";
 import DepartmentService from "../../src/service/department.service";
+import { Role } from "../../src/utils/role.enum";
+import { Status } from "../../src/utils/status.enum";
 
 describe("Employee Service", () => {
   let employeeRepository: EmployeeRepository;
@@ -59,14 +61,15 @@ describe("Employee Service", () => {
     const newEmployeeData = {
       name: "John Doe",
       email: "john.doe@example.com",
-      role: "Engineer",
+      role: "HR",
       department: "IT",
-      age: 30,
+      experience: "30",
       password: "123",
       address: {
         line1: "car",
         pincode: "123456",
       },
+      status: "PROBATION",
     };
 
     const mock = jest.fn();
@@ -85,12 +88,13 @@ describe("Employee Service", () => {
     const createdEmployee = await employeeService.createEmployee(
       newEmployeeData.email,
       newEmployeeData.name,
-      newEmployeeData.age,
+      newEmployeeData.experience,
       newEmployeeData.address.line1,
       newEmployeeData.address.pincode,
       newEmployeeData.password,
-      newEmployeeData.role,
-      newEmployeeData.department
+      Role[newEmployeeData.role],
+      newEmployeeData.department,
+      Status[newEmployeeData.status]
     );
 
     expect(createdEmployee).toBeDefined(); // Ensure something is returned

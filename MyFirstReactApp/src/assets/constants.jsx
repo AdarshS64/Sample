@@ -2,13 +2,13 @@ const EmpDetails = {
   headers: {
     name: "Employee Name",
     id: "Employee ID",
-    empJD: "Joining Date",
+    createdAt: "Joining Date",
     role: "Role",
-    empStat: "Status",
-    empExp: "Experience",
+    status: "Status",
+    experience: "Experience",
     empAct: "Action",
     address: "Address",
-    empEmail: "Email",
+    email: "Email",
   },
   details: [
     {

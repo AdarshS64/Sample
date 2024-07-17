@@ -24,10 +24,18 @@ export const EmployeeApi = apiWithTag.injectEndpoints({
     }),
     deleteEmployeeList: builder.mutation({
       query: ({ id }) => ({
-        url: `/employees/${id   }`,
+        url: `/employees/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["EMPLOYEE_LIST"],
+    }),
+
+    editEmployeeList: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/employees/${id}`,
+        method: "PUT",
+        body: body,
+      }),
     }),
   }),
 });
@@ -37,4 +45,5 @@ export const {
   useAddEmployeeListMutation,
   useGetEmployeeDetailsQuery,
   useDeleteEmployeeListMutation,
+  useEditEmployeeListMutation,
 } = EmployeeApi;

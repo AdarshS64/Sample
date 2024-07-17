@@ -22,7 +22,15 @@ const EmployeeForm = (props) => {
     {
       label: "Employee name",
       placeholder: "",
-      select: false,
+      select: "text",
+      key: "name",
+      onChange: onChange,
+      visible: true,
+    },
+    {
+      label: "Email",
+      placeholder: "",
+      select: "text",
       key: "name",
       onChange: onChange,
       visible: true,
@@ -31,7 +39,7 @@ const EmployeeForm = (props) => {
     {
       label: "Joining Date",
       placeholder: "",
-      select: false,
+      select: "date",
       key: "empJd",
       onChange: onChange,
       visible: true,
@@ -39,7 +47,7 @@ const EmployeeForm = (props) => {
     {
       label: "Department",
       placeholder: "",
-      select: true,
+      select: "select",
       options: dept,
       key: "empDep",
       onChange: onChange,
@@ -48,7 +56,7 @@ const EmployeeForm = (props) => {
     {
       label: "Role",
       placeholder: "",
-      select: true,
+      select: "select",
       options: roles,
       key: "role",
       onChange: onChange,
@@ -57,7 +65,7 @@ const EmployeeForm = (props) => {
     {
       label: "Status",
       placeholder: "",
-      select: true,
+      select: "select",
       key: "empStat",
       options: status,
       onChange: onChange,
@@ -66,7 +74,7 @@ const EmployeeForm = (props) => {
     {
       label: "Experience",
       placeholder: "",
-      select: false,
+      select: "text",
       key: "empExp",
       onChange: onChange,
       visible: true,
@@ -74,7 +82,7 @@ const EmployeeForm = (props) => {
     {
       label: "Address",
       placeholder: "",
-      select: false,
+      select: "text",
       key: "address",
       onChange: onChange,
       visible: true,
@@ -82,7 +90,7 @@ const EmployeeForm = (props) => {
     {
       label: "Employee ID",
       placeholder: "",
-      select: false,
+      select: "text",
       key: "id",
       onChange: onChange,
       visible: mode == "edit" ? false : true,
@@ -94,18 +102,20 @@ const EmployeeForm = (props) => {
       <form className="employee-form">
         <div className="inputs">
           {fields.map((value) => {
-            if (!value.select) {
+            console.log(value.select, "type");
+            if (value.select == "text" || value.select == "date") {
               console.log(value.label);
               if (value.label == "Employee ID") {
                 if (!value.visible) {
                   return (
                     <span className="input-box">
+                      {console.log(value.select, "yo")}
                       <TextField
                         id={value.key}
                         label={value.label}
                         placeholder={value.visible ? value.label : props.userId}
                         onChange={value.onChange}
-                        visible={value.visible}
+                        visible={value.visible ? false : true}
                         style={
                           !value.visible ? { backgroundColor: "#949494" } : {}
                         }
@@ -117,6 +127,7 @@ const EmployeeForm = (props) => {
                 return (
                   <span className="input-box">
                     <TextField
+                      type={value.select == "date" ? "date" : "text"}
                       id={value.key}
                       label={value.label}
                       placeholder={value.visible ? value.label : props.userId}

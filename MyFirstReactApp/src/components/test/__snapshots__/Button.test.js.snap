@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if Button works properly Check if snapshot is matched properly 1`] = `
+<DocumentFragment>
+  <button
+    data-testid="button-test-id"
+  />
+</DocumentFragment>
+`;

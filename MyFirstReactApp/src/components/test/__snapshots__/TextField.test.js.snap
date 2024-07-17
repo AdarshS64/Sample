@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if TextField works properly Check if snapshot is matched properly 1`] = `
+<DocumentFragment>
+   
+  <span
+    class="text-field-wrapper"
+  >
+    <h6 />
+    <label
+      for="Click"
+    >
+      Click
+    </label>
+    <input
+      data-testid="TextField-test-id"
+      placeholder="car"
+      type="text"
+    />
+  </span>
+</DocumentFragment>
+`;

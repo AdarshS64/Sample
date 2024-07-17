@@ -10,6 +10,7 @@ import {
 import { AddressDto } from "./address.dto";
 import "reflect-metadata";
 import { Role } from "../utils/role.enum";
+import { Status } from "../utils/status.enum";
 
 export class CreateEmployeeDto {
   @IsNotEmpty()
@@ -22,8 +23,8 @@ export class CreateEmployeeDto {
   email: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  age: number;
+  @IsString()
+  experience: string;
 
   @IsNotEmpty()
   @ValidateNested({ each: true })
@@ -41,4 +42,8 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsString()
   department: string;
+
+  @IsNotEmpty()
+  @IsEnum(Status)
+  status: Status;
 }

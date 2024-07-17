@@ -1,6 +1,6 @@
-export enum Role{
-    UI ="UI",
-    UX = "UX",
-    DEVELOPEr ="Developer",
-    HR = "HR"
+export enum Role {
+  UI = "UI",
+  UX = "UX",
+  DEVELOPER = "DEVELOPER",
+  HR = "HR",
 }

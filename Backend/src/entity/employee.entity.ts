@@ -14,6 +14,8 @@ import {
 import AbstractEntity from "./abstract.entity";
 import Address from "./address.entity";
 import Department from "./department.entity";
+import { Role } from "../utils/role.enum";
+import { Status } from "../utils/status.enum";
 
 @Entity() //decorator
 class Employee extends AbstractEntity {
@@ -25,7 +27,7 @@ class Employee extends AbstractEntity {
   name: string;
 
   @Column({ nullable: true })
-  age: number;
+  experience: string;
 
   @OneToOne(() => Address, (address) => address.employee, {
     cascade: true,
@@ -37,7 +39,10 @@ class Employee extends AbstractEntity {
   password: string;
 
   @Column({ nullable: true })
-  role: string;
+  role: Role;
+
+  @Column({ nullable: true })
+  status: Status;
 
   @JoinColumn()
   @ManyToOne(() => Department, (department) => department.employee)

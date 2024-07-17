@@ -45,9 +45,9 @@ const EmployeeList = () => {
     }
   }, [data, isSuccess]);
 
-  const stat = useSelector((state) => {
-    return state;
-  });
+  // const stat = useSelector((state) => {
+  //   return state;
+  // });
 
   // let empDetails = useSelector((state) => {
   //   return state.employee.employees;
@@ -66,11 +66,11 @@ const EmployeeList = () => {
   const empHeaders = EmpDetails.headers;
 
   const getColor = (options) => {
-    if (options == "Probation") {
+    if (options == "PROBATION") {
       return "header-probation";
-    } else if (options == "Active") {
+    } else if (options == "ACTIVE") {
       return "header-active";
-    } else if (options == "Inactive") {
+    } else if (options == "INACTIVE") {
       return "header-inactive";
     }
     return "header-options";
@@ -107,6 +107,8 @@ const EmployeeList = () => {
     dispatch(filterEmployee(action));
   };
 
+  console.log(empDetails);
+
   return (
     <>
       <div className="whole">
@@ -132,7 +134,7 @@ const EmployeeList = () => {
             <div className="emp-data">
               <div className="data-heading">
                 {Object.keys(empHeaders).map((options) => {
-                  if (options != "address") {
+                  if (options != "address" && options != "email") {
                     return (
                       <>
                         <span className="header-options">
@@ -145,6 +147,7 @@ const EmployeeList = () => {
               </div>
               <br />
               <div className="data-details">
+                {console.log(empDetails)}{" "}
                 {empDetails.map((value) => {
                   return (
                     <div
@@ -153,19 +156,20 @@ const EmployeeList = () => {
                         onSelect(e, value.id);
                       }}
                     >
-                      {Object.keys(value).map((options) => {
+                      {Object.keys(empHeaders).map((options) => {
+                        console.log(options, "options");
                         if (
                           options == "address" ||
                           options == "empDep" ||
-                          options == "email"
+                          options == "email" ||
+                          options == "empAct"
                         ) {
                           {
                           }
                         } else {
                           return (
                             <span className={getColor(value[options])}>
-                              {value[options]?.department_name ||
-                                value[options]}
+                              {value[options]}
                             </span>
                           );
                         }

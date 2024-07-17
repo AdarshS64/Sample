@@ -10,7 +10,7 @@ export default class EmployeeRepository {
 
   async find(): Promise<Employee[]> {
     return this.repository.find({
-      relations: ["address","department"],
+      relations: ["address", "department"],
     });
   }
 
@@ -19,7 +19,7 @@ export default class EmployeeRepository {
     console.log(filter, "u reached find one by");
     return employeeRepository.findOne({
       where: filter,
-      relations: ["address"],
+      relations: ["address", "department"],
     });
   }
 

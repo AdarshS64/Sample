@@ -25,7 +25,7 @@ export default class DepartmentController {
 
     this.router.put("/:id", this.updateDepartments);
 
-    this.router.delete("/:id", this.deleteDepartment);
+    this.router.delete("/:id", authorize, this.deleteDepartment);
 
     this.router.post("/", authorize, this.createDepartments);
   }
@@ -59,11 +59,18 @@ export default class DepartmentController {
   };
 
   public createDepartments = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
     try {
+      const role = req.role;
+      if (role !== Role.HR) {
+        throw new httpException(
+          403,
+          "You are not authorized to delete department"
+        );
+      }
       const createDepartmentDto = plainToInstance(DepartmentDto, req.body);
       const errors = await validate(createDepartmentDto);
       if (errors.length > 0) {
@@ -142,10 +149,11 @@ export default class DepartmentController {
   ) => {
     try {
       const role = req.role;
+      console.log(role, "Rollle");
       if (role !== Role.HR) {
         throw new httpException(
           403,
-          "You are not authorized to create employee"
+          "You are not authorized to delete department"
         );
       }
 

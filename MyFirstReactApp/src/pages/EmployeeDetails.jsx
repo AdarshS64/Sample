@@ -21,18 +21,20 @@ const EmployeeDetails = () => {
           year: "numeric",
         }),
       };
-      setEmpDetails(employees);
+      setEmpDetails({ ...employees, address: employees.address?.line1 });
     }
   }, [data, isSuccess]);
+
+  console.log(empDetails);
 
   const empHeaders = EmpDetails.headers;
 
   const onStat = (type) => {
-    if (type == "Probation") {
+    if (type == "PROBATION") {
       return "header-probation";
-    } else if (type == "Inactive") {
+    } else if (type == "INACTIVE") {
       return "header-inactive";
-    } else if (type == "Active") {
+    } else if (type == "ACTIVE") {
       return "header-active";
     }
     return "employee-details-header";
@@ -47,20 +49,22 @@ const EmployeeDetails = () => {
         <div className="employee-details">
           {Object.keys(empDetails).map((value) => {
             {
-              return Object.keys(empDetails[value]).map((val) => {
-                if (empDetails[value][val] != "Action") {
+              console.log(value);
+              console.log(empDetails[value]);
+              if (empDetails[value]) {
+                if (empDetails[value] != "Action" && empHeaders[value]) {
                   return (
                     <div className="detail-block">
                       <span className="employee-details-header">
-                        {empHeaders[val]}
+                        {empHeaders[value]}
                       </span>
-                      <span className={onStat(empDetails[value][val])}>
-                        {empDetails[value][val]}
+                      <span className={onStat(empDetails[value])}>
+                        {empDetails[value]}
                       </span>
                     </div>
                   );
                 }
-              });
+              }
             }
           })}
         </div>

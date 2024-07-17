@@ -16,6 +16,7 @@ import departmentService from "../service/department.service";
 import { UpdateEmployeeDto } from "../dto/updateEmployee.dto";
 import RequestWithUser from "../utils/requestwithUser";
 import { EmployeeResponseDto } from "../dto/employee.response.dto";
+import { Status } from "../utils/status.enum";
 
 export default class EmployeeController {
   public router: express.Router;
@@ -44,13 +45,13 @@ export default class EmployeeController {
   ) => {
     try {
       const employee = await this.employeeService.getAllEmployees();
-      const createEmployeeDto = plainToInstance(EmployeeResponseDto, employee);
+      const getEmployeeDto = plainToInstance(EmployeeResponseDto, employee);
       const errors = await validate(EmployeeResponseDto);
       if (errors.length > 0) {
         console.log(JSON.stringify(errors));
         throw new httpException(400, JSON.stringify(errors));
       }
-      res.status(200).send(createEmployeeDto);
+      res.status(200).send(getEmployeeDto);
     } catch (error) {
       console.log("hey you reached an error");
       next(error);
@@ -68,7 +69,13 @@ export default class EmployeeController {
       if (!employee) {
         throw new httpException(404, "Employee not found");
       }
-      res.status(200).send(employee);
+      const getEmployeeDto = plainToInstance(EmployeeResponseDto, employee);
+      const errors = await validate(EmployeeResponseDto);
+      if (errors.length > 0) {
+        console.log(JSON.stringify(errors));
+        throw new httpException(400, JSON.stringify(errors));
+      }
+      res.status(200).send(getEmployeeDto);
     } catch (error) {
       console.log("hey you reached an error");
       next(error);
@@ -144,12 +151,13 @@ export default class EmployeeController {
       const savedEmployee = await this.employeeService.createEmployee(
         createEmployeeDto.email,
         createEmployeeDto.name,
-        createEmployeeDto.age,
+        createEmployeeDto.experience,
         line1,
         pincode,
         createEmployeeDto.password,
-        createEmployeeDto.role,
-        department
+        Role[createEmployeeDto.role],
+        department,
+        Status[createEmployeeDto.status]
       );
       res.status(201).send(savedEmployee);
     } catch (error) {
@@ -189,12 +197,13 @@ export default class EmployeeController {
         employeeId,
         updateEmployeeDto.email,
         updateEmployeeDto.name,
-        updateEmployeeDto.age,
+        updateEmployeeDto.experience,
         req.body.line1,
         req.body.pincode,
         updateEmployeeDto.password,
         updateEmployeeDto.role,
-        req.body.department_name
+        req.body.department_name,
+        updateEmployeeDto.status
       );
       res.status(200).send(employee);
     } catch (error) {

@@ -17,6 +17,7 @@ const CreateEmployee = () => {
     empStat: "",
     empExp: "",
     address: "",
+    email: "",
   });
   const dispatch = useDispatch();
   const [employee, { isSuccess, data }] = useAddEmployeeListMutation();
@@ -37,8 +38,16 @@ const CreateEmployee = () => {
     // });
     // console.log(crdetails);
     // dispatch(addEmployee(crdetails[0]));
-
-    employee();
+    console.log(crdetails[0].empDep, "onSubmit");
+    employee({
+      email: crdetails[0].email,
+      name: crdetails[0].name,
+      age: 10,
+      address: { line1: crdetails[0].address, pincode: "123" },
+      password: "1234",
+      role: crdetails[0].role,
+      department: crdetails[0].empDep,
+    });
   };
 
   const onCancel = (e) => {
@@ -51,6 +60,7 @@ const CreateEmployee = () => {
       empStat: "",
       empExp: "",
       address: "",
+      empDep: "",
     });
   };
 

@@ -11,6 +11,7 @@ import DepartmentRepository from "../repository/department.repository";
 import DepartmentService from "./department.service";
 import DepartmentRouter from "../routes/department.routes";
 import DepartmentController from "../controller/department.controller";
+import { Status } from "../utils/status.enum";
 
 export default class EmployeeService {
   constructor(
@@ -30,17 +31,18 @@ export default class EmployeeService {
   createEmployee = async (
     email: string,
     name: string,
-    age: number,
+    experience: string,
     line1: string,
     pincode: string,
     password: string,
-    role: string,
-    department: string
+    role: Role,
+    department: string,
+    status: Status
   ) => {
     const newEmployee = new Employee();
     const address = new Address();
     const findDepartment = await this.departmentService.getDepartmentById({
-      department_name: department,
+      department_name: department.toUpperCase(),
     });
     console.log(findDepartment, "Have we got something here");
     if (!findDepartment) {
@@ -49,13 +51,14 @@ export default class EmployeeService {
 
     newEmployee.name = name;
     newEmployee.email = email;
-    newEmployee.age = age;
+    newEmployee.experience = experience;
     address.line1 = line1;
     address.pincode = pincode;
     newEmployee.address = address;
     newEmployee.password = password ? await bcrypt.hash(password, 10) : "";
     newEmployee.role = role;
     newEmployee.department = findDepartment;
+    newEmployee.status = status;
     console.log(newEmployee);
 
     return this.employeeRepository.save(newEmployee);
@@ -70,12 +73,13 @@ export default class EmployeeService {
     employeeId?: number,
     email?: string,
     name?: string,
-    age?: number,
+    experience?: string,
     line1?: string,
     pincode?: string,
     password?: string,
     role?: Role,
-    department_name?: string
+    department_name?: string,
+    status?: Status
   ) {
     // return this.employee
     console.log("updateEmployee entered");
@@ -83,7 +87,7 @@ export default class EmployeeService {
     const newEmployee = await this.getEmployeeById(employeeId);
 
     const findDepartment = await this.departmentService.getDepartmentById({
-      department_name: department_name,
+      department_name: department_name?.toUpperCase(),
     });
     console.log(findDepartment, "Have we got something here");
     if (!findDepartment) {
@@ -91,11 +95,12 @@ export default class EmployeeService {
     }
     newEmployee.name = name ? name : newEmployee.name;
     newEmployee.email = email ? email : newEmployee.email;
-    newEmployee.age = age ? age : newEmployee.age;
+    newEmployee.experience = experience ? experience : newEmployee.experience;
     newEmployee.password = password
       ? await bcrypt.hash(password, 10)
       : newEmployee.password;
     newEmployee.role = role ? role : newEmployee.role;
+    newEmployee.status = status ? status : newEmployee.status;
     newEmployee.address.line1 = line1 ? line1 : newEmployee.address.line1;
     newEmployee.address.pincode = pincode
       ? pincode

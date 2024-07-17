@@ -11,6 +11,7 @@ import { AddressDto } from "./address.dto";
 import "reflect-metadata";
 import { Role } from "../utils/role.enum";
 import { CreateEmployeeDto } from "./employee.dto";
+import { Status } from "../utils/status.enum";
 
 export class UpdateEmployeeDto {
   @IsString()
@@ -24,7 +25,7 @@ export class UpdateEmployeeDto {
 
   @IsNumber()
   @IsOptional()
-  age: number;
+  experience: string;
 
   @ValidateNested({ each: true })
   @Type(() => AddressDto)
@@ -42,4 +43,8 @@ export class UpdateEmployeeDto {
   @IsString()
   @IsOptional()
   department: string;
+
+  @IsEnum(Status)
+  @IsOptional()
+  status: Status;
 }
